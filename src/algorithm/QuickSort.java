@@ -5,29 +5,29 @@ import java.io.InputStreamReader;
 
 public class QuickSort {
 	
-	static int[] data = {6, 1, 2, 7, 9, 3, 4, 5, 10, 8};
+	static int[] data = {3, 7, 8, 5, 2, 1, 9, 5, 4};
 	
 	static void quickSort1(int[] data, int left, int right) {
 		if (left > right) {
 			return;
 		}
-		int i, j, t, temp;
+		int i, j, pivot;
 
-		temp = data[left];// temp中存的是基準數
+		pivot = data[left];// temp中存的是基準數
 		i = left;
 		j = right;
 		while (i != j) {
 			//順序很重要，先從右往左找
-			while(data[j] >= temp && i < j){
+			while(data[j] >= pivot && i < j){
 				j--;
 			}
 			//再從左往右找
-			while(data[i] <= temp && i < j){
+			while(data[i] <= pivot && i < j){
 				i++;
 			}
 			
 			if (i < j){
-				t = data[i];
+				int t = data[i];
 				data[i] = data[j];
 				data[j] = t;
 			}
@@ -35,7 +35,7 @@ public class QuickSort {
 		
 		//最終將基準數歸位
 		data[left] = data[i];
-		data[i] = temp;
+		data[i] = pivot;
 		
 		quickSort1(data, left, i-1);
 		quickSort1(data, i+1, right);
@@ -95,9 +95,9 @@ public class QuickSort {
 //
 //		System.out.println("排序後字串：" + new String(data));
 		
-		quickSort1(data, 0, 9);
+		quickSort1(data, 0, 8);
 		
-		for(int i = 0; i <= 9; i++){
+		for(int i = 0; i <= 8; i++){
 			System.out.println("[" + data[i] + "]");
 		}
 	}
