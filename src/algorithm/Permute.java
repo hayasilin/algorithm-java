@@ -4,24 +4,18 @@ import java.util.Arrays;
 
 public class Permute {
     // swap 2 elements of an array,
-    void swap(int[] arr, int x, int y) {
-        int temp = arr[x];
-        arr[x] = arr[y];
-        arr[y] = temp;
+    void swap(int[] nums, int first, int i) {
+        int temp = nums[first];
+        nums[first] = nums[i];
+        nums[i] = temp;
+    }
+
+    void permute(int[] nums) {
+        permute(nums, 0, nums.length);
     }
 
     /**
      * print permutations of array
-     * @param arr
-     *            original int array,
-     */
-    void permute(int[] arr) {
-        permute(arr, 0, arr.length - 1);
-    }
-
-    /**
-     * print permutations of array
-     * 
      * @param arr
      *            original int array,
      * @param i
@@ -29,21 +23,20 @@ public class Permute {
      * @param n
      *            end index
      */
-    void permute(int[] arr, int i, int n) {
-        int j;
-        if (i == n)
-            System.out.println(Arrays.toString(arr));
+    void permute(int[] nums, int first, int n) {
+        if (first == n)
+            System.out.println(Arrays.toString(nums));
         else {
-            for (j = i; j <= n; j++) {
-                swap(arr, i, j);
-                permute(arr, i + 1, n);
-                swap(arr, i, j); // backtrack
+            for (int i = first; i < n; i++) {
+                swap(nums, first, i);
+                permute(nums, first + 1, n);// backtrack
+                swap(nums, first, i); 
             }
         }
     }
 
     public static void main(String[] args) {
-        int arr[] = { 1, 2, 3 };
-        new Permute().permute(arr);
+        int nums[] = { 1, 2, 3, 4 };
+        new Permute().permute(nums);
     }
 }
