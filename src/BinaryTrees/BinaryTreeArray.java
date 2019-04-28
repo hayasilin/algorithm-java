@@ -1,10 +1,10 @@
 package BinaryTrees;
 
-class BinaryTree {
+class BinaryTreeDemo {
 
 	private int[] binaryTree;
 	
-	public BinaryTree(int size, int[] array){
+	public BinaryTreeDemo(int size, int[] array){
 		int level;//樹的階層
 		binaryTree = new int[size];
 		
@@ -44,7 +44,7 @@ public class BinaryTreeArray {
 	public static void main(String[] args){
 		int[] data = {0, 5, 6, 4, 8, 2, 3, 7, 1, 9};
 		
-		BinaryTree bt = new BinaryTree(16, data);
+		BinaryTreeDemo bt = new BinaryTreeDemo(16, data);
 		
 		bt.printBinaryTree();
 		
