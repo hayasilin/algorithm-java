@@ -17,7 +17,10 @@ public class SameTree {
         if (p == null && q == null) return true;
         if (q == null || p == null) return false;
         if (p.value != q.value) return false;
-        return isSameTree(p.right, q.right) && isSameTree(p.left, q.left);
+        
+        boolean sameRight = isSameTree(p.right, q.right);
+        boolean sameLeft = isSameTree(p.left, q.left);
+        return sameRight && sameLeft;
     }
 	
 	public static void main(String[] args) {

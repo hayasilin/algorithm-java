@@ -1,36 +1,105 @@
 package BinaryTrees;
 
-public class BinaryTree {
-	
-	class Node {
-        int value;
-        Node left;
-        Node right;
+import java.util.LinkedList;
+import java.util.Queue;
 
-        Node(int value) {
-            this.value = value;
-            right = null;
-            left = null;
-        }
+class Node {
+    int value;
+    Node left;
+    Node right;
+
+    Node(int value) {
+        this.value = value;
+        right = null;
+        left = null;
     }
+}
+
+public class BinaryTree {
 
 	static Node root;
 	
 	public static void main(String[] args) {
 		BinaryTree tree = createBinaryTree();
 		
+		System.out.println(containsNode(5));
+		
+		// DFS
 		traverseInOrder(root);
 		System.out.println("");
 		traversePreOrder(root);
 		System.out.println("");
 		traversePostOrder(root);
+			
+		// BFS
+		traverseLevelOrder();
 		
+		Node cloneNode = cloneWithBFS();
+		System.out.println(isSameTree(root, cloneNode));
+	}
+	
+	public static Node cloneWithBFS() {
+		if (root == null) { return null; }
 		
-//		System.out.println(tree.root.value);
-//		System.out.println(tree.root.left.value);
-//		System.out.println(tree.root.right.value);
-//		
-//		System.out.println(containsNode(5));
+		Queue<Node> nodes = new LinkedList<>();
+	    nodes.add(root);
+	    
+	    Node cloneNode = new Node(root.value);
+	    cloneNode.left = root.left;
+	    cloneNode.right = root.right;
+	    
+	    Node tempLeftNode = new Node(0);
+	    Node tempRightNode = new Node(0);
+	    
+	    while (!nodes.isEmpty()) {
+	    		Node node = nodes.remove();
+	    		
+	    		System.out.print(" " + node.value);
+	    		
+	    		if (node.left != null) {
+	    			nodes.add(node.left);    			
+	    			tempLeftNode = node.left;
+	    			
+	    		}
+	    		
+	    		if (node.right != null) {
+	    			nodes.add(node.right);
+	    			cloneNode.right = node.right;
+	    		}
+	    }
+	    
+	    return cloneNode;
+	}
+	
+	public static boolean isSameTree(Node p, Node q) {
+        if (p == null && q == null) return true;
+        if (q == null || p == null) return false;
+        if (p.value != q.value) return false;
+        return isSameTree(p.right, q.right) && isSameTree(p.left, q.left);
+    }
+	
+	public static void traverseLevelOrder() {
+	    if (root == null) {
+	        return;
+	    }
+	 
+	    Queue<Node> nodes = new LinkedList<>();
+	    nodes.add(root);
+	 
+	    while (!nodes.isEmpty()) {
+	 
+	        Node node = nodes.remove();
+	 
+	        System.out.print(" " + node.value);
+	 
+	        if (node.left != null) {
+	            nodes.add(node.left);
+	        }
+	 
+	        if (node.right!= null) {
+	            nodes.add(node.right);
+	        }
+	    }
 	}
 	
 	public static void traverseInOrder(Node node) {
@@ -68,9 +137,12 @@ public class BinaryTree {
 	    if (value == current.value) {
 	        return true;
 	    } 
-	    return value < current.value
-	      ? containsNodeRecursive(current.left, value)
-	      : containsNodeRecursive(current.right, value);
+	    
+	    if (current.value > value) {
+	    		return containsNodeRecursive(current.left, value);
+	    } else {
+	    		return containsNodeRecursive(current.right, value);
+	    }
 	}
 	
 	private static BinaryTree createBinaryTree() {
@@ -104,6 +176,4 @@ public class BinaryTree {
 
         return current;
     }
-
-
 }
