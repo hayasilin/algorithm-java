@@ -19,7 +19,7 @@ class Node {
 
 public class BinaryTree {
 
-	static Node root;
+	public static Node root;
 	
 	public static void main(String[] args) {
 		BinaryTree tree = createBinaryTree();
@@ -38,6 +38,24 @@ public class BinaryTree {
 		
 		Node cloneNode = cloneWithBFS();
 		System.out.println(isSameTree(root, cloneNode));
+		
+		int result = minimumDepthBinaryTree(root);
+		System.out.println(result);
+	}
+	
+	public static int minimumDepthBinaryTree(Node root) {
+		if (root == null) { return 0; }
+		if (root.left == null || root.right == null) {
+			return 1;
+		}
+		if (root.left == null) {
+			return minimumDepthBinaryTree(root.right) + 1; 
+		}
+		if (root.right == null) {
+			return minimumDepthBinaryTree(root.left) + 1;
+		}
+		
+		return Math.min(minimumDepthBinaryTree(root.left), minimumDepthBinaryTree(root.right)) + 1;
 	}
 	
 	public static Node cloneWithBFS() {
@@ -147,7 +165,7 @@ public class BinaryTree {
 	    }
 	}
 	
-	private static BinaryTree createBinaryTree() {
+	public static BinaryTree createBinaryTree() {
 	    BinaryTree bt = new BinaryTree();
 	    bt.add(6);
 	    bt.add(4);
